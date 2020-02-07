@@ -3,56 +3,102 @@
 
 Overview
 ---
-In this project, you will use what you've learned about deep neural networks and convolutional neural networks to classify traffic signs. You will train and validate a model so it can classify traffic sign images using the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset). After the model is trained, you will then try out your model on images of German traffic signs that you find on the web.
+Convolutional neural networks is implemented to classify German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset). The trained network is further tested upon the random German Traffic Signs picked from the internet.
 
-We have included an Ipython notebook that contains further instructions 
-and starter code. Be sure to download the [Ipython notebook](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb). 
-
-We also want you to create a detailed writeup of the project. Check out the [writeup template](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup. The writeup can be either a markdown file or a pdf document.
-
-To meet specifications, the project will require submitting three files: 
-* the Ipython notebook with the code
-* the code exported as an html file
-* a writeup report either as a markdown or pdf file 
-
-Creating a Great Writeup
----
-A great writeup should include the [rubric points](https://review.udacity.com/#!/rubrics/481/view) as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
-
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup.
-
-The Project
----
-The goals / steps of this project are the following:
-* Load the data set
+Project steps included:
+* Load the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset)
 * Explore, summarize and visualize the data set
 * Design, train and test a model architecture
 * Use the model to make predictions on new images
 * Analyze the softmax probabilities of the new images
-* Summarize the results with a written report
+* Summarize the results with a written report (this README file)
 
-### Dependencies
+Dependencies
+---
+The lab environment can be created with CarND Term1 Starter Kit. Click [here](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) for the details.
+
 This lab requires:
 
 * [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit)
+* Anaconda
+* TensorFlow 2
+  ```
+  conda env create -f tf2_gpu.yml
+  ```
 
-The lab environment can be created with CarND Term1 Starter Kit. Click [here](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) for the details.
+Dataset
+---
+German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset) is used for the training, validation and testing of the neural network.
 
-### Dataset and Repository
+The Dataset consists of 34799 training images, 12630 testing images and 4410 validation images.
+Each image is of 32 x 32 x 3 shape.
+Whole dataset can be catogrized in 43 classes.
 
-1. Download the data set. The classroom has a link to the data set in the "Project Instructions" content. This is a pickled dataset in which we've already resized the images to 32x32. It contains a training, validation and test set.
-2. Clone the project, which contains the Ipython notebook and the writeup template.
-```sh
-git clone https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project
-cd CarND-Traffic-Sign-Classifier-Project
-jupyter notebook Traffic_Sign_Classifier.ipynb
-```
 
-### Requirements for Submission
-Follow the instructions in the `Traffic_Sign_Classifier.ipynb` notebook and write the project report using the writeup template as a guide, `writeup_template.md`. Submit the project code and writeup document.
+ The undermentioned image shows the visualization of the Dataset
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+<p align="center">
+<img src="images/dataset.png" width="400" height="270" border="10">
+</p>
 
+Design and Test a Model Architecture
+---
+
+#### Preprocessing
+
+Once the dataset images are loaded, all the pixel value of the images is normalized  to be between 0 and 1.
+
+#### Model Architecture
+
+The neural network is inspired by the LeNet Neural Network.
+
+First Layer:
+
+The input for the neural network is a 32×32x3 image which passes through the first convolutional layer with 18 feature maps or filters having size 5×5 and a stride of one. The image dimensions changes from 32x32x1 to 28x28x18.
+
+Second Layer:
+
+Then the network applies average pooling layer or sub-sampling layer with a filter size 2×2 and a stride of two. The resulting image dimensions will be reduced to 14x14x18.
+
+Third Layer:
+
+Next, there is a second convolutional layer with 48 feature maps having size 5×5 and a stride of 1.The image dimensions changes from 14x14x6 to 10x10x48.
+
+Fourth Layer:
+
+The fourth layer is again an average pooling layer with filter size 2×2 and a stride of 2. This layer is the same as the second layer except it has 48 feature maps so the output will be reduced to 5x5x48.
+
+Fifth Layer:
+
+The fifth layer (C5) is a fully connected convolutional layer with 500 feature maps each of size 1×1. Each of the 500 units in C5 is connected to all the 1200 nodes (5x5x48) in the fourth layer S4.
+
+Sixth Layer:
+
+The sixth layer is a fully connected layer (F6) with 300 units.
+
+Seventh Layer:
+
+The seventh layer is a fully connected layer (F6) with 150 units.
+
+Output Layer:
+
+Finally, there is a fully connected softmax output layer ŷ with 43 possible values corresponding to the digits from 0 to 42.
+
+#### Model Training
+
+#### Solution Approach
+
+
+Test a Model on New Images
+---
+
+#### Acquiring New Images
+
+<p align="center">
+<img src="images/new_signs.png" width="640" height="150" border="1">
+</p>
+
+#### Performance on New Images
+
+
+#### Model Certainty - Softmax Probabilities
